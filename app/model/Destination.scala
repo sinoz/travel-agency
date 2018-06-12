@@ -1,5 +1,7 @@
 package model
 
+import java.io.InputStream
+
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{JsPath, Json, Reads}
 
@@ -10,8 +12,8 @@ object Destination {
       (JsPath \ "activities").read[String]
     )(Destination.apply _)
 
-  def parse(jsonString: String) =
-    Json.fromJson(Json.parse(jsonString))(Reads.seq(destinationReads)).get
+  def parse(inputStream: InputStream) =
+    Json.fromJson(Json.parse(inputStream))(Reads.seq(destinationReads)).get
 }
 
 case class Destination(

@@ -44,8 +44,7 @@ class HomeController @Inject()(cc: ControllerComponents, environment: Environmen
       (JsPath \ "suggestions").write[Seq[Destination]]
     )(unlift(User.Response.unapply))
 
-  val destinationsSrc = Source.fromFile(environment.getFile(assetsFinder.path("destinations.json")))
-  val destinations = Destination.parse(destinationsSrc.getLines.mkString)
+  val destinations = Destination.parse(environment.resourceAsStream("public/destinations.json").get)
 
   val userMaster = system.actorOf(UserMaster.props(destinations), name = "user-master")
 
