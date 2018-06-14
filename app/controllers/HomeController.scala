@@ -1,13 +1,11 @@
 package controllers
 
-import java.io.File
-
 import akka.actor.ActorSystem
 import akka.pattern.ask
 import akka.util.Timeout
 import javax.inject._
 import model.Destination
-import play.api.{Environment, Play}
+import play.api.Environment
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{JsPath, Json, Reads, Writes}
@@ -18,7 +16,6 @@ import services.{User, UserMaster}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import scala.io.Source
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -36,7 +33,9 @@ class HomeController @Inject()(cc: ControllerComponents, environment: Environmen
   implicit val destinationWrites: Writes[Destination] = (
     (JsPath \ "name").write[String] and
       (JsPath \ "images").write[Seq[String]] and
-      (JsPath \ "activities").write[String]
+      (JsPath \ "activities").write[String] and
+      (JsPath \ "weather").write[String] and
+      (JsPath \ "price").write[Int]
     )(unlift(Destination.unapply))
 
   implicit val responseWrites: Writes[User.Response] = (

@@ -9,7 +9,9 @@ object Destination {
   implicit val destinationReads: Reads[Destination] = (
     (JsPath \ "name").read[String] and
       (JsPath \ "images").read[Seq[String]] and
-      (JsPath \ "activities").read[String]
+      (JsPath \ "activities").read[String] and
+      (JsPath \ "weather").read[String] and
+      (JsPath \ "price").read[Int]
     )(Destination.apply _)
 
   def parse(inputStream: InputStream) =
@@ -19,5 +21,7 @@ object Destination {
 case class Destination(
   name: String,
   images: Seq[String],
-  activities: String
+  activities: String,
+  weather: String,
+  price: Int
 )

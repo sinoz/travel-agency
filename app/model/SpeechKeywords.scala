@@ -38,7 +38,17 @@ object SpeechKeywords {
     "good evening"
   )
 
-  val NumericPrices = (50 to 5000).map(price => s"$price euro").toSet
+  val EuroPrices = {
+    val range = 50 to 5000
+
+    val plain = range.map(price => s"$price").toSet
+
+    val euro = range.map(price => s"$price euro").toSet
+    val token = range.map(price => s"€$price").toSet
+
+    plain ++ euro ++ token
+  }
+
   val TextPrices = Set(
     "fifty",
     "hundred",
@@ -53,12 +63,37 @@ object SpeechKeywords {
     "four hundred"
   )
 
-  val Prices = NumericPrices ++ TextPrices
+  val Prices = EuroPrices ++ TextPrices
+
+  val Warm = Set(
+    "warm"
+  )
+
+  val Cold = Set(
+    "cold"
+  )
 
   val StayPlaces = Set(
     "hotel",
     "motel",
     "camping"
+  )
+
+  val Yes = Set(
+    "yes",
+    "no",
+    "i do",
+    "we do"
+  )
+
+  val No = Set(
+    "no",
+    "i dont",
+    "i don't",
+    "i do not",
+    "we dont",
+    "we don't",
+    "we do not"
   )
 
   val Destinations = Set(
